@@ -16,9 +16,7 @@ impl ListNode {
             val
         }
     }
-    //   fn list(l1:Option<Box<ListNode>>) {
-    //   if l1 == Some(Box::new(ListNode{ val: 4, next: Some(Box::new(ListNode { val: 3, next: None }))})){
-    //l1.unwrap();
+
     fn split_list(l1:Option<Box<ListNode>>, mut reconstructed_number: Vec<i64>) -> Vec<i64> {
 
         let l1unwrap = l1.as_ref().unwrap();
@@ -71,23 +69,6 @@ pub fn vectorize_sum(sum:i64) -> Vec<i64> {
     return vec_sum;
 }
 
-//struct ListStruct;
-
-/*impl Listing for ListStruct {
-    fn list(&self) {
-        if self.value == 0 {
-            println!("The list is empty")
-        } else {
-            println!("{}", self.value);
- //           match self.next {
- //               address::address(ref next_address) => next_address.list(),
- //               address::Nil => {}
- //           }
-        }
-    }
-}*/
-
-//impl Solution {
 
 fn main(){
     let reconstructed_first = Vec::new();
@@ -106,30 +87,13 @@ fn main(){
 
     println!("{:?}", number1 + number2);
     let sum:i64 = number1 + number2;
-    let reverse_sum = reverse_sum(sum);
 
-    println!("{}", reverse_sum);
+    let z = vectorize_sum(sum);
 
-    let z = vectorize_sum(reverse_sum);
+    let tail = Some(Box::new(ListNode{val:z[0], next:None}));
+    let next = Some(Box::new(ListNode{val:z[1],next:tail}));
+    let head = Some(Box::new(ListNode{val:z[2],next:next}));
 
-    let mut head = ListNode::new(z[0]);
-
-//    let mut next:ListNode = ListNode::new(z[1]);
-
-    println!("{:?}", Some(&head));
-    //println!("{:?}", l2);
-    println!("{:?}", head.next );
-    let next_placeholder = Some(Box::new(ListNode{val:z[1], next:None}));
-    let next = Some(Box::new(ListNode{val:z[0],next:next_placeholder}));
- //   let ListNode:ListNode.next = z[1];
-    let linkedlist = Some(Box::new(head));
-    println!("next is {:?}",next);
-    //let zub = ListNode::next;
-    println!("linkedlist is {:?}",linkedlist);
+    println!("head is {:?}",head);
     return;
-
-
-
-// todo build an option<Box<LinkNode>> out of z
-
 }
