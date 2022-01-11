@@ -114,15 +114,19 @@ fn main(){
 
     let mut head = ListNode::new(z[0]);
 
-    let mut next:ListNode = ListNode::new(z[1]);
+//    let mut next:ListNode = ListNode::new(z[1]);
 
     println!("{:?}", Some(&head));
     //println!("{:?}", l2);
     println!("{:?}", head.next );
-    let head:next = ListNode::new(z[1]);
+    let next_placeholder = Some(Box::new(ListNode{val:z[1], next:None}));
+    let next = Some(Box::new(ListNode{val:z[0],next:next_placeholder}));
  //   let ListNode:ListNode.next = z[1];
     let linkedlist = Some(Box::new(head));
-    println!("{:?}",linkedlist);
+    println!("next is {:?}",next);
+    //let zub = ListNode::next;
+    println!("linkedlist is {:?}",linkedlist);
+    return;
 
 
 
