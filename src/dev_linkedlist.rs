@@ -1,4 +1,5 @@
-#[derive(Clone)]
+/*#[derive(Clone)]
+
 enum address {
     address(Box<myList>),
     Nil,
@@ -81,7 +82,7 @@ impl myList {
     }
 }
 
-/*fn main() {
+fn main() {
     let mut head = myList {
         value: 8,
         next: address::Nil,
@@ -95,4 +96,5 @@ impl myList {
     head.update(0, 6);
     head.list();
 }
+
 */
