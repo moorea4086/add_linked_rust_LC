@@ -40,15 +40,35 @@ impl List {
     }
 }
 
-fn split_list(l1:Option<Box<ListNode>>, mut reconstructed_number: Vec<i32>) -> Vec<i32> {
 
-    let l1unwrap = l1.as_ref().unwrap();
-    //   println!("{:?}", l1unwrap.val);
-    reconstructed_number.push(*&l1unwrap.val);
-//        println!("{:?}", l1unwrap.next);
-    if l1unwrap.next == None {return reconstructed_number;}
-    let nextnode= l1unwrap.next.to_owned();
-    split_list(nextnode, reconstructed_number)
+fn add_lists(l1:Option<Box<ListNode>>, l2:Option<Box<ListNode>>, mut vec:Vec<u8>, carry: i32) -> Vec<u8> {
+    let carry_copy = carry;
+    let mut carry= 0;
+    let mut l1unwrap:&Box<ListNode> = &Box::new(ListNode { val: 0, next: None });
+    let mut l2unwrap:&Box<ListNode> = &Box::new(ListNode { val: 0, next: None });
+    if l1 != None {
+        l1unwrap = l1.as_ref().unwrap();
+    }
+    if l2 != None {
+        l2unwrap = l2.as_ref().unwrap();
+    }
+    println!("Linked list 1 members are {:?}", l1unwrap.val);
+    println!("Linked list 2 members are {:?}", l2unwrap.val);
+    let mut individual_sum = l1unwrap.val + l2unwrap.val + carry_copy;
+//    reconstructed_number.push(*&l1unwrap.val);
+//        println!("individual sum is {:?}", individual_sum);
+    if individual_sum > 9 {
+        carry = 1;
+        individual_sum = individual_sum % 10;
+    }
+    println!("individual sum is {:?}", individual_sum);
+    vec.push(individual_sum as u8);
+    //if l1unwrap.next == None && l2unwrap.next == None {return l3;}
+    //if l2unwrap.next == None {return l3;}
+    let nextnode1= l1unwrap.next.to_owned();
+    let nextnode2= l2unwrap.next.to_owned();
+    if nextnode1 == None && nextnode2 == None && carry == 0 {return vec;}
+    add_lists(nextnode1, nextnode2, vec, carry)
 }
 
 pub fn combine_vector(vec: Vec<i32>) -> u128 {
@@ -93,29 +113,20 @@ pub fn vectorize_sum(sum:u128) -> Vec<i32> {
 fn main(){
     let l1 = Some(Box::new(ListNode{ val: 2, next: Some(Box::new(ListNode { val: 4, next: Some(Box::new(ListNode { val: 3, next: None }))}))}));
     let l2 = Some(Box::new(ListNode{ val: 5, next: Some(Box::new(ListNode{ val: 6, next: Some(Box::new(ListNode { val: 4, next: None }))}))}));
-        let reconstructed_first = Vec::new();
-        let reconstructed_second = Vec::new();
 
-        let add1 = split_list(l1, reconstructed_first);
-        let add2 = split_list(l2, reconstructed_second);
-        println!("add2 = {:?}", add2);
+    let vec: Vec<u8> = Vec::new();
 
-        let number1:u128 = combine_vector(add1);
-        println!("number 1 = {:?}", number1);
-        let number2:u128 = combine_vector(add2);
-        println!("number 2 = {:?}", number2);
+    let mut ans = add_lists(l1, l2, vec, 0);
 
-        let sum:u128 = number1 + number2;
+    println!("{:?}", ans);
+    ans.reverse();
+    println!("{:?}", ans);
 
-        let z = vectorize_sum(sum);
-
-        let mut list = List::new();
-
-        for v in z {
-            list.push(v);
-        }
-
-        println!("{:?}",list.head);
- //       list.head
+    let mut l3 = List::new();
+    for a in ans {
+        l3.push(a as i32);
     }
-//}
+
+    println!("{:?}",l3.head);
+
+}
